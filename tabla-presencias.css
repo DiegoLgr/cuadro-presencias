@@ -1,0 +1,32 @@
+body, html{
+  margin: 0;
+  padding: 0;
+  background: #ededed;
+  font-family: 'Montserrat', sans-serif;
+}
+.main-title{
+  text-align: center;
+  color: #009900;
+}
+
+#cuadro-presencias {
+  padding: 20px;
+  display: inline-block;
+  position: relative;
+  top: 60px;
+  left: 120px;
+  border: 2px solid #ccc;
+}
+.day {
+  fill: #ccc;
+}
+
+#workers {
+  display: block;
+  margin: auto;
+}
+
+#workersi {
+  display: block;
+  margin: auto;
+}
