@@ -1,25 +1,28 @@
+// DATOS.
 var workers = ["Juan", "Pepe", "Sebastian"];
-var daysShown = 20,
-  square = 40,
-  padding = 4;
-
-var tableWidth = daysShown * (square + padding) + padding,
-  tableHeight = padding + workers.length*(square + padding);
-
-var dayLabelsSize = 15,
-    monthLabelsSize = 20,
-    monthLegendSize = monthLabelsSize + 2*padding;
-    workerLabelsLength = 150,
-    workerLabelsSize = 17;
-
-var svgWidth = tableWidth + workerLabelsLength,
-    svgHeight = tableHeight + monthLegendSize + dayLabelsSize;
-
-// Prepare data for d3
+var daysShown = 20;
 var data = [];
 for(i=1; i<=daysShown; i++)
   for(j=0; j<workers.length; j++)
     data.push([workers[j], i]);
+
+
+var  square = 40,
+  padding = 4;
+
+var tableWidth = daysShown * (square + padding) + padding,
+  tableHeight = padding + workers.length*(square + padding);
+// Font sizes.
+var dayLabelsSize = 15,
+    monthLabelsSize = 20,
+    workerLabelsSize = 17;
+    monthLegendSize = monthLabelsSize + 2*padding;
+
+    workerLabelsLength = 150,
+
+var svgWidth = tableWidth + workerLabelsLength,
+    svgHeight = tableHeight + monthLegendSize + dayLabelsSize;
+
 
 // SVG.
 var svg = d3.select("#cuadro-presencias").append("svg")
@@ -27,7 +30,26 @@ var svg = d3.select("#cuadro-presencias").append("svg")
   .attr("height", svgHeight)
   .attr("class", "svg")
 
-  // TABLE.
+var monthLegend = svg.append("svg")
+  .attr("width", tableWidth)
+  .attr("height", monthLegendSize)
+  .attr("x", workerLabelsLength)
+  .attr("id", "monthLegend");
+
+var daysLegend = svg.append("svg")
+  .attr("width", tableWidth)
+  .attr("height", dayLabelsSize)
+  .attr("x", workerLabelsLength)
+  .attr("y", monthLegendSize)
+  .attr("id", "daysLegend");
+
+var leftLabels = svg.append("svg")
+  .attr("width", workerLabelsLength)
+  .attr("height", svgHeight)
+  .attr("y", monthLegendSize + dayLabelsSize)
+  .attr("id", "workers");
+
+// TABLE.
 var daysSquare = svg.selectAll("squares")
   .data(data).enter()
   .append("rect")
@@ -48,12 +70,6 @@ var daysSquare = svg.selectAll("squares")
   });
 
 // MONT LEGEND.
-var monthLegend = svg.append("svg")
-.attr("width", tableWidth)
-.attr("height", monthLegendSize)
-.attr("x", workerLabelsLength)
-.attr("id", "monthLegend");
-
 var months = ["Junio"];
 var monthLabel = monthLegend.selectAll("text")
   .data(months).enter()
@@ -66,24 +82,15 @@ var monthLabel = monthLegend.selectAll("text")
     return "" + monthLabelsSize + "px";
   });
 
-// TOP LEGEND.
+// DAYS LEGEND.
 var daysList = [];
 for(i=1; i<=daysShown; i++)
   daysList.push(i);
 
-var topLegend = svg.append("svg")
-  .attr("width", tableWidth)
-  .attr("height", dayLabelsSize)
-  .attr("x", workerLabelsLength)
-  .attr("y", monthLegendSize)
-  .attr("id", "topLegend");
-
-var dayLabels = topLegend.selectAll("text")
+var dayLabels = daysLegend.selectAll("text")
   .data(daysList).enter()
   .append("text")
-  .text(function(d){
-    return "" + d + "";
-  })
+  .text(function(d){return "" + d + "";})
   .attr("x", function(d){
     return 15 + (d - 1) * (square + padding);
   })
@@ -95,12 +102,6 @@ var dayLabels = topLegend.selectAll("text")
   });
 
 // LEFT LEGEND.
-var leftLabels = svg.append("svg")
-  .attr("width", workerLabelsLength)
-  .attr("height", svgHeight)
-  .attr("y", monthLegendSize + dayLabelsSize)
-  .attr("id", "workers");
-
  var workerLabels = leftLabels.selectAll("text")
   .data(workers).enter()
   .append("text")
@@ -115,16 +116,3 @@ var leftLabels = svg.append("svg")
   .attr("font-size", function(){
     return "" + workerLabelsSize + "px";
   });
-
-
-
-  // .attr("y", function(d){
-  //   var result;
-  //   for (j=0; j<workers.length; j++)
-  //     if (d === workers[j])
-  //       result =  dayLabelsSize +
-  //         padding + j*(square + padding);
-  //       console.log(result);
-  //       return result;
-  // });
-  //
