@@ -1,12 +1,17 @@
 // DATOS.
-var workers = ["Juan", "Pepe", "Sebastian"];
-var daysShown = 20;
+var workers = ["Juan", "Pepe", "Sebastian", "Carlos"];
+var daysShown = 15;
 var data = [];
 for(i=1; i<=daysShown; i++)
   for(j=0; j<workers.length; j++)
     data.push([workers[j], i]);
 
-
+var obra = {
+  "codigo": 503,
+  "nombre": "Dragados Pozuelo"
+};
+console.log(obra.codigo);
+//--------------------------------------------------
 var  square = 40,
   padding = 4;
 
@@ -16,9 +21,8 @@ var tableWidth = daysShown * (square + padding) + padding,
 var dayLabelsSize = 15,
     monthLabelsSize = 20,
     workerLabelsSize = 17;
-    monthLegendSize = monthLabelsSize + 2*padding;
-
-    workerLabelsLength = 150,
+    monthLegendSize = monthLabelsSize + 2*padding,
+    workerLabelsLength = 150;
 
 var svgWidth = tableWidth + workerLabelsLength,
     svgHeight = tableHeight + monthLegendSize + dayLabelsSize;
@@ -52,12 +56,12 @@ var leftLabels = svg.append("svg")
 // TABLE.
 var daysSquare = svg.selectAll("squares")
   .data(data).enter()
-  .append("rect")
+  .append("div")
   .attr("class", function(d, i){
-     return "day %" + d[0] +"%" + d[1];
+     return "day " + d[0] +"-" + d[1];
    })
-  .attr("width", square)
-  .attr("height", square)
+  .attr("width", function(){return ""+square+"px";})
+  .attr("height", function(){return ""+square+"px";})
   .attr("x", function(d){
     return workerLabelsLength + padding
       + (d[1] -1) * (square + padding);
@@ -116,3 +120,5 @@ var dayLabels = daysLegend.selectAll("text")
   .attr("font-size", function(){
     return "" + workerLabelsSize + "px";
   });
+
+var prueba = d3.select("#Pepe-3").append("text").text("funciona");

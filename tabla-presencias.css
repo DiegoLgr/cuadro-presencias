@@ -18,6 +18,7 @@ body, html{
   border: 2px solid #ccc;
 }
 .day {
+  display: inline-block;
   fill: #ccc;
 }
 
