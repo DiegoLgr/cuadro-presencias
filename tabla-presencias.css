@@ -1,8 +1,12 @@
 body, html{
   margin: 0;
   padding: 0;
-  background: #ededed;
+  background: #fefefe;
   font-family: 'Montserrat', sans-serif;
+}
+p {
+  padding: 0;
+  margin: 0;
 }
 .main-title{
   text-align: center;
@@ -16,20 +20,16 @@ body, html{
   top: 60px;
   left: 120px;
   border: 2px solid #ccc;
+  border-radius: 5px;
 }
 .day {
-  display: inline-block;
-  fill: #ccc;
+  text-align: center;
+  background: #eee;
+  border-radius: 2px;
 }
+
 
 #workers {
-  display: block;
-  margin: auto;
-}
-
-#workersi {
-  fill: #440000;
-  background: #440000;
   display: block;
   margin: auto;
 }
