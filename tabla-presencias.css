@@ -28,6 +28,8 @@ body, html{
 }
 
 #workersi {
+  fill: #440000;
+  background: #440000;
   display: block;
   margin: auto;
 }

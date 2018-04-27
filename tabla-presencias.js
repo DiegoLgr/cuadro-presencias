@@ -53,15 +53,23 @@ var leftLabels = svg.append("svg")
   .attr("y", monthLegendSize + dayLabelsSize)
   .attr("id", "workers");
 
+var squareRect = svg.append("foreignObject")
+  .attr("width", tableWidth)
+  .attr("height", tableHeight)
+  .attr("x", function(){return workerLabelsLength + padding})
+  .attr("y", function(){return monthLegendSize + dayLabelsSize});
+
 // TABLE.
-var daysSquare = svg.selectAll("squares")
+
+var daysSquare = squareRect.selectAll("div")
   .data(data).enter()
-  .append("div")
+  .append("xhtml:div")
+  .html('<div class="rectEnd"></div>')
   .attr("class", function(d, i){
      return "day " + d[0] +"-" + d[1];
    })
-  .attr("width", function(){return ""+square+"px";})
-  .attr("height", function(){return ""+square+"px";})
+  .attr("width", square)
+  .attr("height", square)
   .attr("x", function(d){
     return workerLabelsLength + padding
       + (d[1] -1) * (square + padding);
@@ -72,6 +80,27 @@ var daysSquare = svg.selectAll("squares")
         return monthLegendSize + dayLabelsSize +
           padding + j*(square + padding);
   });
+
+
+
+// var daysSquare = svg.selectAll("squares")
+//   .data(data).enter()
+//   .append("rect")
+//   .attr("class", function(d, i){
+//      return "day " + d[0] +"-" + d[1];
+//    })
+//   .attr("width", square)
+//   .attr("height", square)
+//   .attr("x", function(d){
+//     return workerLabelsLength + padding
+//       + (d[1] -1) * (square + padding);
+//   })
+//   .attr("y", function(d){
+//     for (j=0; j<workers.length; j++)
+//       if (d[0] === workers[j])
+//         return monthLegendSize + dayLabelsSize +
+//           padding + j*(square + padding);
+//   });
 
 // MONT LEGEND.
 var months = ["Junio"];
