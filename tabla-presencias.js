@@ -30,42 +30,67 @@ var svgWidth = tableWidth + workerLabelsLength,
     svgHeight = tableHeight + monthLegendSize + dayLabelsSize;
 
 
-// SVG frame.
-var svg = d3.select("#cuadro-presencias").append("svg")
+// MAQUETADO.
+function crearSvg(){
+  d3.select("#cuadro-presencias")
+  .insert("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight)
-  .attr("class", "svg")
+  .attr("id", "svg");
+}
 
-var monthLegend = svg.append("svg")
+function crearLeyendaMeses(){
+  d3.select("#svg")
+  .insert("svg")
   .attr("width", tableWidth)
   .attr("height", monthLegendSize)
   .attr("x", workerLabelsLength)
   .attr("id", "monthLegend");
+}
 
-var daysLegend = svg.append("svg")
+function crearLeyendaDias(){
+  d3.select("#svg")
+  .insert("svg")
   .attr("width", tableWidth)
   .attr("height", dayLabelsSize)
   .attr("x", workerLabelsLength)
   .attr("y", monthLegendSize)
   .attr("id", "daysLegend");
+}
 
-var leftLabels = svg.append("svg")
+function crearLeyendaTrabajadores(){
+  d3.select("#svg")
+  .insert("svg")
   .attr("width", workerLabelsLength)
   .attr("height", svgHeight)
   .attr("y", monthLegendSize + dayLabelsSize)
   .attr("id", "workers");
+}
 
-var squareRect = svg.append("svg")
+function crearTabla( ){
+  d3.select("#svg")
+  .insert("svg")
   .attr("width", tableWidth)
   .attr("height", tableHeight)
   .attr("x", workerLabelsLength + padding)
   .attr("y", monthLegendSize + dayLabelsSize)
   .attr("id", "graph");
-
+}
+function crearMaquetado(){
+  crearSvg();
+  crearLeyendaMeses();
+  crearLeyendaDias();
+  crearLeyendaTrabajadores();
+  crearTabla();
+}
 //--------------------------------------------------
-// TABLE.
+
+// CONTENIDO.
+// Se añaden divs y parrafos como contenido a cada cuadro.
+function crearCuadrados(){
 // Se pintan los cuadrados que representan los dias.
-var daysSquare = squareRect.selectAll("squares")
+  d3.select("#graph")
+  .selectAll("squares")
   .data(data).enter()
   .append("svg")
   .attr("width", square)
@@ -78,130 +103,162 @@ var daysSquare = squareRect.selectAll("squares")
       if (d[0] === workers[j])
         return padding + j*(square + padding);
   });
-// Se les añade un viv a cada cuadrado para poder
-// cambiar propiedades como el fondo y para poder
-// añadirle un parrafo (con rect no se puede)
-// y en ese parrafo se escriben las cosas.
-squareRect.selectAll("svg").each(function(){
-  d3.select(this).
-  append("foreignObject")
+}
+
+function crearFODias(){
+  // Para poder insertar html en el svg.
+  d3.select("#graph")
+  .selectAll("svg")
+  .each(function(){
+    d3.select(this)
+    .append("foreignObject")
     .attr("width", square)
-    .attr("height", square)
-    .append("xhtml:div")
-    .attr("class", function(){
-      return "day";
-     })
-    .attr("id", function(d, i){
-      return "" + d[0] +"-" + d[1];
-    })
+    .attr("height", square);
+  });
+}
+
+function crearDivsDias() {
+  // divs como anclaje y para dar formato.
+  d3.select("#graph").selectAll("foreignObject")
+  .append("xhtml:div")
+  .attr("class", function(){
+    return "day";
+   })
+  .attr("id", function(d, i){
+    return "" + d[0] +"-" + d[1];
+  })
+  .style("min-width", function(){return ""+square+"px";})
+  .style("min-height", function(){return ""+square+"px";});
+}
+
+function crearContenedorCodigo(){
+  d3.selectAll(".day")
+  .each(function(){
+    d3.select(this)
     .insert("p")
-    .attr("id", function(d, i){
-      return "" + d[0] +"-" + d[1]+"-p";
+    .attr("class", function(){return "codigo-obra";})
+  });
+}
+
+function crearContenedorHoras(){
+  d3.selectAll(".day")
+    .each(function(){
+      d3.select(this)
+      .insert("p")
+      .attr("class", function(){return "horas-trabajadas";})
     });
-});
+}
+
+function rellenarTabla(){
+  crearCuadrados();
+  crearFODias();
+  crearDivsDias();
+  crearContenedorCodigo();
+  crearContenedorHoras();
+}
 
 d3.selectAll(".day")
-.style("min-width", function(){return ""+square+"px";})
-.style("min-height", function(){return ""+square+"px";})
-
-// MONT LEGEND.
-var months = ["Junio"];
-var monthLabel = monthLegend.selectAll("text")
-  .data(months).enter()
-  .append("text")
-  .text(function(d){return ""+d+""})
-  .attr("text-anchor", "middle")
-  .attr("x", tableWidth/2)
-  .attr("y", function(){return ""+monthLabelsSize+"px";})
-  .attr("font-size", function(){
-    return "" + monthLabelsSize + "px";
-  });
-
-// DAYS LEGEND.
-var daysList = [];
-for(i=1; i<=daysShown; i++)
-  daysList.push(i);
-
-var dayLabels = daysLegend.selectAll("text")
-  .data(daysList).enter()
-  .append("text")
-  .text(function(d){return "" + d + "";})
-  .attr("x", function(d){
-    return 15 + (d - 1) * (square + padding);
-  })
-  .attr("y", function(){
-    return "" + dayLabelsSize + "px";
-  })
-  .attr("font-size", function(){
-    return "" + dayLabelsSize + "px";
-  });
-
-// LEFT LEGEND.
- var workerLabels = leftLabels.selectAll("text")
-  .data(workers).enter()
-  .append("text")
-  .attr("id", "workersi")
-  .text(function(d){return d;})
-  .attr("y", function(_,i){
-    return workerLabelsSize +
-      padding + i*(square + padding);
-  })
-  .attr("text-anchor", "end")
-  .attr("x", workerLabelsLength - 10)
-  .attr("font-size", function(){
-    return "" + workerLabelsSize + "px";
-  });
-
-d3.select("#Juan-3-p").text(obra.codigo);
-d3.select("#Juan-3").style("background", "#9bf");
-
-d3.select("#Juan-4-p").text(obra.codigo);
-d3.select("#Juan-4").style("background", "#9bf");
-
-d3.select("#Juan-5-p").text(obra.codigo);
-d3.select("#Juan-5").style("background", "#9bf");
-
-d3.select("#Juan-7-p").text(obra.codigo);
-d3.select("#Juan-7").style("background", "#9bf");
-
-d3.select("#Pepe-4-p").text(obra.codigo);
-d3.select("#Pepe-4").style("background", "#9bf");
-
-d3.select("#Pepe-8-p").text(obra.codigo);
-d3.select("#Pepe-8").style("background", "#9bf");
-
-d3.select("#Pepe-9-p").text(obra.codigo);
-d3.select("#Pepe-9").style("background", "#9bf");
-
-d3.select("#Pepe-11-p").text(obra.codigo);
-d3.select("#Pepe-11").style("background", "#9bf");
-
-d3.select("#Pepe-12-p").text(obra.codigo);
-d3.select("#Pepe-12").style("background", "#9bf");
-
-d3.select("#Pepe-13-p").text(obra.codigo);
-d3.select("#Pepe-13").style("background", "#9bf");
-
-d3.select("#Pepe-14-p").text(obra.codigo);
-d3.select("#Pepe-14").style("background", "#9bf");
-
-d3.select("#Pepe-15-p").text(obra.codigo);
-d3.select("#Pepe-15").style("background", "#9bf");
-
-d3.select("#Sebastian-1-p").text(obra.codigo);
-d3.select("#Sebastian-1").style("background", "#9bf");
-
-d3.select("#Sebastian-13-p").text(obra.codigo);
-d3.select("#Sebastian-13").style("background", "#9bf");
-
-d3.select("#Sebastian-14-p").text(obra.codigo);
-d3.select("#Sebastian-14").style("background", "#9bf");
-
-d3.select("#Sebastian-15-p").text(obra.codigo);
-d3.select("#Sebastian-15").style("background", "#9bf");
-
-d3.select("#Sebastian-7-p").text(obra.codigo);
-d3.select("#Sebastian-7").style("background", "#9bf");
-
-d3.select("#Sebastian-8-p").text(obra.codigo);
-d3.select("#Sebastian-8").style("background", "#9bf");
+// // MONT LEGEND.
+// var months = ["Junio"];
+// var monthLabel = monthLegend.selectAll("text")
+//   .data(months).enter()
+//   .append("text")
+//   .text(function(d){return ""+d+""})
+//   .attr("text-anchor", "middle")
+//   .attr("x", tableWidth/2)
+//   .attr("y", function(){return ""+monthLabelsSize+"px";})
+//   .attr("font-size", function(){
+//     return "" + monthLabelsSize + "px";
+//   });
+//
+// // DAYS LEGEND.
+// var daysList = [];
+// for(i=1; i<=daysShown; i++)
+//   daysList.push(i);
+//
+// var dayLabels = daysLegend.selectAll("text")
+//   .data(daysList).enter()
+//   .append("text")
+//   .text(function(d){return "" + d + "";})
+//   .attr("x", function(d){
+//     return 15 + (d - 1) * (square + padding);
+//   })
+//   .attr("y", function(){
+//     return "" + dayLabelsSize + "px";
+//   })
+//   .attr("font-size", function(){
+//     return "" + dayLabelsSize + "px";
+//   });
+//
+// // LEFT LEGEND.
+//  var workerLabels = leftLabels.selectAll("text")
+//   .data(workers).enter()
+//   .append("text")
+//   .attr("id", "workersi")
+//   .text(function(d){return d;})
+//   .attr("y", function(_,i){
+//     return workerLabelsSize +
+//       padding + i*(square + padding);
+//   })
+//   .attr("text-anchor", "end")
+//   .attr("x", workerLabelsLength - 10)
+//   .attr("font-size", function(){
+//     return "" + workerLabelsSize + "px";
+//   });
+//
+crearMaquetado();
+rellenarTabla();
+// d3.select("#Juan-3 .codigo-obra").text(obra.codigo);
+// d3.select("#Juan-3 .horas-trabajadas").text("9");
+// d3.select("#Juan-3").style("background", "#9bf");
+//
+// d3.select("#Juan-4 .codigo-obra").text(obra.codigo);
+// d3.select("#Juan-4").style("background", "#9bf");
+//
+// d3.select("#Juan-5 .codigo-obra").text(obra.codigo);
+// d3.select("#Juan-5").style("background", "#9bf");
+//
+// d3.select("#Juan-7 .codigo-obra").text(obra.codigo);
+// d3.select("#Juan-7").style("background", "#9bf");
+//
+// d3.select("#Pepe-4 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-4").style("background", "#9bf");
+//
+// d3.select("#Pepe-8 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-8").style("background", "#9bf");
+//
+// d3.select("#Pepe-9 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-9").style("background", "#9bf");
+//
+// d3.select("#Pepe-11 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-11").style("background", "#9bf");
+//
+// d3.select("#Pepe-12 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-12").style("background", "#9bf");
+//
+// d3.select("#Pepe-13 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-13").style("background", "#9bf");
+//
+// d3.select("#Pepe-14 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-14").style("background", "#9bf");
+//
+// d3.select("#Pepe-15 .codigo-obra").text(obra.codigo);
+// d3.select("#Pepe-15").style("background", "#9bf");
+//
+// d3.select("#Sebastian-1 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-1").style("background", "#9bf");
+//
+// d3.select("#Sebastian-13 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-13").style("background", "#9bf");
+//
+// d3.select("#Sebastian-14 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-14").style("background", "#9bf");
+//
+// d3.select("#Sebastian-15 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-15").style("background", "#9bf");
+//
+// d3.select("#Sebastian-7 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-7").style("background", "#9bf");
+//
+// d3.select("#Sebastian-8 .codigo-obra").text(obra.codigo);
+// d3.select("#Sebastian-8").style("background", "#9bf");
