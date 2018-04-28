@@ -1,6 +1,12 @@
+// Para crear el cuadro basta con llamar a pintarCuadro().
+// (Esta al final del arcivo).
+
 // DATOS.
 var workers = ["Juan", "Pepe", "Sebastian"];
 var daysShown = 15;
+var daysList = [];
+for(i=1; i<=daysShown; i++)
+  daysList.push(i);
 var data = [];
 for(i=1; i<=daysShown; i++)
   for(j=0; j<workers.length; j++)
@@ -64,7 +70,7 @@ function crearLeyendaTrabajadores(){
   .attr("width", workerLabelsLength)
   .attr("height", svgHeight)
   .attr("y", monthLegendSize + dayLabelsSize)
-  .attr("id", "workers");
+  .attr("id", "workersLegend");
 }
 
 function crearTabla( ){
@@ -76,19 +82,13 @@ function crearTabla( ){
   .attr("y", monthLegendSize + dayLabelsSize)
   .attr("id", "graph");
 }
-function crearMaquetado(){
-  crearSvg();
-  crearLeyendaMeses();
-  crearLeyendaDias();
-  crearLeyendaTrabajadores();
-  crearTabla();
-}
+
 //--------------------------------------------------
 
 // CONTENIDO.
 // Se añaden divs y parrafos como contenido a cada cuadro.
 function crearCuadrados(){
-// Se pintan los cuadrados que representan los dias.
+  // Se pintan los cuadrados que representan los dias.
   d3.select("#graph")
   .selectAll("squares")
   .data(data).enter()
@@ -157,108 +157,68 @@ function rellenarTabla(){
   crearContenedorHoras();
 }
 
-d3.selectAll(".day")
-// // MONT LEGEND.
-// var months = ["Junio"];
-// var monthLabel = monthLegend.selectAll("text")
-//   .data(months).enter()
-//   .append("text")
-//   .text(function(d){return ""+d+""})
-//   .attr("text-anchor", "middle")
-//   .attr("x", tableWidth/2)
-//   .attr("y", function(){return ""+monthLabelsSize+"px";})
-//   .attr("font-size", function(){
-//     return "" + monthLabelsSize + "px";
-//   });
-//
-// // DAYS LEGEND.
-// var daysList = [];
-// for(i=1; i<=daysShown; i++)
-//   daysList.push(i);
-//
-// var dayLabels = daysLegend.selectAll("text")
-//   .data(daysList).enter()
-//   .append("text")
-//   .text(function(d){return "" + d + "";})
-//   .attr("x", function(d){
-//     return 15 + (d - 1) * (square + padding);
-//   })
-//   .attr("y", function(){
-//     return "" + dayLabelsSize + "px";
-//   })
-//   .attr("font-size", function(){
-//     return "" + dayLabelsSize + "px";
-//   });
-//
-// // LEFT LEGEND.
-//  var workerLabels = leftLabels.selectAll("text")
-//   .data(workers).enter()
-//   .append("text")
-//   .attr("id", "workersi")
-//   .text(function(d){return d;})
-//   .attr("y", function(_,i){
-//     return workerLabelsSize +
-//       padding + i*(square + padding);
-//   })
-//   .attr("text-anchor", "end")
-//   .attr("x", workerLabelsLength - 10)
-//   .attr("font-size", function(){
-//     return "" + workerLabelsSize + "px";
-//   });
-//
-crearMaquetado();
-rellenarTabla();
-// d3.select("#Juan-3 .codigo-obra").text(obra.codigo);
-// d3.select("#Juan-3 .horas-trabajadas").text("9");
-// d3.select("#Juan-3").style("background", "#9bf");
-//
-// d3.select("#Juan-4 .codigo-obra").text(obra.codigo);
-// d3.select("#Juan-4").style("background", "#9bf");
-//
-// d3.select("#Juan-5 .codigo-obra").text(obra.codigo);
-// d3.select("#Juan-5").style("background", "#9bf");
-//
-// d3.select("#Juan-7 .codigo-obra").text(obra.codigo);
-// d3.select("#Juan-7").style("background", "#9bf");
-//
-// d3.select("#Pepe-4 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-4").style("background", "#9bf");
-//
-// d3.select("#Pepe-8 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-8").style("background", "#9bf");
-//
-// d3.select("#Pepe-9 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-9").style("background", "#9bf");
-//
-// d3.select("#Pepe-11 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-11").style("background", "#9bf");
-//
-// d3.select("#Pepe-12 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-12").style("background", "#9bf");
-//
-// d3.select("#Pepe-13 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-13").style("background", "#9bf");
-//
-// d3.select("#Pepe-14 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-14").style("background", "#9bf");
-//
-// d3.select("#Pepe-15 .codigo-obra").text(obra.codigo);
-// d3.select("#Pepe-15").style("background", "#9bf");
-//
-// d3.select("#Sebastian-1 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-1").style("background", "#9bf");
-//
-// d3.select("#Sebastian-13 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-13").style("background", "#9bf");
-//
-// d3.select("#Sebastian-14 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-14").style("background", "#9bf");
-//
-// d3.select("#Sebastian-15 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-15").style("background", "#9bf");
-//
-// d3.select("#Sebastian-7 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-7").style("background", "#9bf");
-//
-// d3.select("#Sebastian-8 .codigo-obra").text(obra.codigo);
-// d3.select("#Sebastian-8").style("background", "#9bf");
+// LEYENDAS
+var months = ["Junio"];
+function rellenarLeyendaMeses(){
+   d3.select("#monthLegend")
+   .selectAll("text")
+  .data(months).enter()
+  .append("text")
+  .text(function(d){return ""+d+""})
+  .attr("text-anchor", "middle")
+  .attr("x", tableWidth/2)
+  .attr("y", function(){return ""+monthLabelsSize+"px";})
+  .attr("font-size", function(){
+    return "" + monthLabelsSize + "px";
+  });
+}
+
+function rellenarLeyendaDias(){
+  d3.select("#daysLegend")
+  .selectAll("text")
+  .data(daysList).enter()
+  .append("text")
+  .text(function(d){return "" + d + "";})
+  .attr("x", function(d){
+    return 15 + (d - 1) * (square + padding);
+  })
+  .attr("y", function(){
+    return "" + dayLabelsSize + "px";
+  })
+  .attr("font-size", function(){
+    return "" + dayLabelsSize + "px";
+  });
+}
+
+function rellenarLeyendaTrabajadores(){
+  d3.select("#workersLegend").selectAll("text")
+  .data(workers).enter()
+  .append("text")
+  .attr("id", "worker")
+  .text(function(d){return d;})
+  .attr("y", function(_,i){
+    return workerLabelsSize +
+      padding + i*(square + padding);
+  })
+  .attr("text-anchor", "end")
+  .attr("x", workerLabelsLength - 10)
+  .attr("font-size", function(){
+    return "" + workerLabelsSize + "px";
+  });
+}
+
+//##################################################
+// Funcion final
+function pintarCuadro(){
+  crearSvg();
+  crearLeyendaMeses();
+  crearLeyendaDias();
+  crearLeyendaTrabajadores();
+  crearTabla();
+  rellenarTabla();
+  rellenarLeyendaMeses();
+  rellenarLeyendaDias();
+  rellenarLeyendaTrabajadores();
+}
+
+//##################################################
