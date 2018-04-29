@@ -1,13 +1,12 @@
-// import pintarCuadro from './tabla-presencias';
-trabajadores = ["Juan", "Pepe", "Sebastian"];
- let cuadro = new CuadroPresencias();
-
- cuadro.workers.push("Carlos")
+ let cuadro = new CuadroPresencias(["Juan", "Pepe", "Sebastian"]);
  cuadro.pintarCuadro();
 
-
-
-
+function anadirTrabajador(form){
+ d3.select("#svg").remove()
+ let nombre = document.getElementById("entrada").value
+ cuadro.workers.push(nombre)
+ cuadro.pintarCuadro()
+}
 
 
 
@@ -23,35 +22,35 @@ function asignarTrabajo(nombre, dia, colorObra, codigoObra, horas){
 }
 
 
-// asignarTrabajo("Juan", 3, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 4, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 5, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 6, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 7, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 10, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 11, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 12, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 13, "#6c8", 509, 9);
-// asignarTrabajo("Juan", 14, "#6c8", 509, 9);
-//
-// asignarTrabajo("Pepe", 1, "#ffd700", 521, 9);
-// asignarTrabajo("Pepe", 3, "#6c8", 509, 9);
-// asignarTrabajo("Pepe", 4, "#6c8", 509, 9);
-// asignarTrabajo("Pepe", 5, "#6c8", 509, 9);
-// asignarTrabajo("Pepe", 6, "#6c8", 509, 9);
-// asignarTrabajo("Pepe", 7, "#6c8", 509, 9);
-// asignarTrabajo("Pepe", 10, "#8bf", 503, 9);
-// asignarTrabajo("Pepe", 11, "#8bf", 503, 9);
-// asignarTrabajo("Pepe", 12, "#8bf", 503, 9);
-// asignarTrabajo("Pepe", 13, "#8bf", 503, 9);
-//
-// asignarTrabajo("Sebastian", 3, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 4, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 5, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 6, "#8bf", 503, 9);
-// asignarTrabajo("Sebastian", 7, "#8bf", 503, 9);
-// asignarTrabajo("Sebastian", 10, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 11, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 12, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 13, "#6c8", 509, 9);
-// asignarTrabajo("Sebastian", 14, "#6c8", 509, 9);
+asignarTrabajo("Juan", 3, "#6c8", 509, 9);
+asignarTrabajo("Juan", 4, "#6c8", 509, 9);
+asignarTrabajo("Juan", 5, "#6c8", 509, 9);
+asignarTrabajo("Juan", 6, "#6c8", 509, 9);
+asignarTrabajo("Juan", 7, "#6c8", 509, 9);
+asignarTrabajo("Juan", 10, "#6c8", 509, 9);
+asignarTrabajo("Juan", 11, "#6c8", 509, 9);
+asignarTrabajo("Juan", 12, "#6c8", 509, 9);
+asignarTrabajo("Juan", 13, "#6c8", 509, 9);
+asignarTrabajo("Juan", 14, "#6c8", 509, 9);
+
+asignarTrabajo("Pepe", 1, "#ffd700", 521, 9);
+asignarTrabajo("Pepe", 3, "#6c8", 509, 9);
+asignarTrabajo("Pepe", 4, "#6c8", 509, 9);
+asignarTrabajo("Pepe", 5, "#6c8", 509, 9);
+asignarTrabajo("Pepe", 6, "#6c8", 509, 9);
+asignarTrabajo("Pepe", 7, "#6c8", 509, 9);
+asignarTrabajo("Pepe", 10, "#8bf", 503, 9);
+asignarTrabajo("Pepe", 11, "#8bf", 503, 9);
+asignarTrabajo("Pepe", 12, "#8bf", 503, 9);
+asignarTrabajo("Pepe", 13, "#8bf", 503, 9);
+
+asignarTrabajo("Sebastian", 3, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 4, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 5, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 6, "#8bf", 503, 9);
+asignarTrabajo("Sebastian", 7, "#8bf", 503, 9);
+asignarTrabajo("Sebastian", 10, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 11, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 12, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 13, "#6c8", 509, 9);
+asignarTrabajo("Sebastian", 14, "#6c8", 509, 9);

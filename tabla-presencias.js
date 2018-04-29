@@ -2,9 +2,8 @@
 // (Esta al final del arcivo).
 
 // DATOS.
-// var workers = ["Juan", "Pepe", "Sebastian"];
-function CuadroPresencias (){
-  this.workers = ["Juan", "Pepe", "Sebastian"]
+function CuadroPresencias (trabajadores){
+  this.workers = trabajadores
   let daysShown = 15;
   let daysList = [];
   for(i=1; i<=daysShown; i++)
@@ -14,8 +13,8 @@ function CuadroPresencias (){
   let  square = 40,
     padding = 4;
 
-  let tableWidth = daysShown * (square + padding) + padding,
-    tableHeight = padding + this.workers.length*(square + padding);
+  let tableWidth = daysShown * (square + padding) + padding
+  let tableHeight = 0;
   // Font sizes.
   let dayLabelsSize = 15,
       monthLabelsSize = 20,
@@ -24,11 +23,27 @@ function CuadroPresencias (){
 
       workerLabelsLength = 150;
 
-   let svgWidth = tableWidth + workerLabelsLength,
-      svgHeight = tableHeight + monthLegendSize + dayLabelsSize
+   let svgWidth = tableWidth + workerLabelsLength
+      svgHeight = 0;
  let that = this
 
 //--------------------------------------------------
+function creaDatos(){
+   datos = []
+  console.log(datos)
+  for(i=1; i<=daysShown; i++)
+    for(j=0; j<that.workers.length; j++)
+      datos.push([that.workers[j], i]);
+  console.log(datos)
+  return datos
+  }
+
+function calculoAltoTabla(){
+  return padding + that.workers.length*(square + padding);
+}
+function calculoAltoSvg(){
+  return tableHeight + monthLegendSize + dayLabelsSize
+}
 // MAQUETADO.
   function crearSvg(){
     d3.select("#cuadro-presencias")
@@ -36,6 +51,7 @@ function CuadroPresencias (){
     .attr("width", svgWidth)
     .attr("height", svgHeight)
     .attr("id", "svg");
+    console.log(tableHeight)
   }
 
   function crearLeyendaMeses(){
@@ -81,6 +97,7 @@ function CuadroPresencias (){
   // CONTENIDO.
   // Se añaden divs y parrafos como contenido a cada cuadro.
   function crearCuadrados(){
+    console.log("hola")
     // Se pintan los cuadrados que representan los dias.
     d3.select("#graph")
     .selectAll("squares")
@@ -203,6 +220,9 @@ function CuadroPresencias (){
   //##################################################
   // Funcion final
   this.pintarCuadro = function(){
+    data = creaDatos()
+    tableHeight = calculoAltoTabla()
+    svgHeight = calculoAltoSvg()
     crearSvg();
     crearLeyendaMeses();
     crearLeyendaDias();
