@@ -2,8 +2,8 @@
 // (Esta al final del arcivo).
 
 // DATOS.
-function CuadroPresencias (trabajadores){
-  this.workers = trabajadores
+function CuadroPresencias (){
+  this.workers = []
   let daysShown = 15;
   let daysList = [];
   for(i=1; i<=daysShown; i++)
@@ -30,11 +30,9 @@ function CuadroPresencias (trabajadores){
 //--------------------------------------------------
 function creaDatos(){
    datos = []
-  console.log(datos)
   for(i=1; i<=daysShown; i++)
     for(j=0; j<that.workers.length; j++)
       datos.push([that.workers[j], i]);
-  console.log(datos)
   return datos
   }
 
@@ -51,7 +49,6 @@ function calculoAltoSvg(){
     .attr("width", svgWidth)
     .attr("height", svgHeight)
     .attr("id", "svg");
-    console.log(tableHeight)
   }
 
   function crearLeyendaMeses(){
@@ -97,7 +94,6 @@ function calculoAltoSvg(){
   // CONTENIDO.
   // Se añaden divs y parrafos como contenido a cada cuadro.
   function crearCuadrados(){
-    console.log("hola")
     // Se pintan los cuadrados que representan los dias.
     d3.select("#graph")
     .selectAll("squares")
@@ -217,9 +213,21 @@ function calculoAltoSvg(){
     });
   }
 
+
+  this.asignarTrabajo = function(nombre,
+                  dia, horas,  colorObra, codigoObra){
+    var selector = "#"+ nombre +"-"+ dia;
+    d3.select(selector + " .codigo-obra")
+      .text(String(codigoObra));
+    d3.select(selector + " .horas-trabajadas")
+      .text(String(horas));
+    d3.select(selector)
+      .style("background", colorObra);
+  }
   //##################################################
   // Funcion final
-  this.pintarCuadro = function(){
+  this.pintarCuadro = function(trabajadores){
+    this.workers = trabajadores
     data = creaDatos()
     tableHeight = calculoAltoTabla()
     svgHeight = calculoAltoSvg()
