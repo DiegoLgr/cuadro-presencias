@@ -33,7 +33,11 @@ function Trabajadores(){
   let trabajadores = {}
 
   this.anadirTrabajador = function(nombre){
-    trabajadores[nombre] = new Trabajador(nombre)
+    if(!trabajadores.hasOwnProperty(nombre))
+      trabajadores[nombre] = new Trabajador(nombre)
+  }
+  this.eliminarTrabajador = function(nombre){
+    delete trabajadores[nombre]
   }
   this.asignarTrabajo = function(nombre, numeroDia, horas, obra){
     let prueba = new Dia(numeroDia, horas, obra)
@@ -72,14 +76,15 @@ function ControladorCuadro(trabajadores){
    }
 }
 
-
-puntoRoma = new Obra(509, "#6c8")
-trabajadores = new Trabajadores()
+let obras={}
+let puntoRoma = new Obra(509, "#6c8")
+obras["puntoRoma"]=puntoRoma
+let trabajadores = new Trabajadores()
 trabajadores.anadirTrabajador("Pepe")
 trabajadores.anadirTrabajador("Juan")
 trabajadores.anadirTrabajador("Sebastian")
 
-trabajadores.asignarTrabajo("Pepe", 1, 5, puntoRoma)
+trabajadores.asignarTrabajo("Pepe", 1, 5, obras["puntoRoma"])
 trabajadores.asignarTrabajo("Pepe", 5, 8, puntoRoma)
 trabajadores.asignarTrabajo("Juan", 3, 9, puntoRoma)
 trabajadores.asignarTrabajo("Juan", 8, 9, puntoRoma)
