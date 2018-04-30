@@ -35,10 +35,6 @@ function Trabajadores(){
   this.anadirTrabajador = function(nombre){
     trabajadores[nombre] = new Trabajador(nombre)
   }
-  this.anadirTrabajadorForm = function(form){
-    let nombre = document.getElementById("entrada").value
-    trabajadores[nombre] = new Trabajador(nombre)
-  }
   this.asignarTrabajo = function(nombre, numeroDia, horas, obra){
     let prueba = new Dia(numeroDia, horas, obra)
     trabajadores[nombre].dias.push(prueba)
@@ -62,10 +58,7 @@ function Trabajadores(){
 
 function ControladorCuadro(trabajadores){
   let cuadro = new CuadroPresencias();
-  this.actualizarCuadro = function(){
-    d3.select("#svg").remove()
-    cuadro.pintarCuadro()
-   }
+
   this.pintarCuadro = function(){
     cuadro.pintarCuadro(trabajadores.nombresTrabajadores())
     trabajadores.aFormatoAsignacion()
@@ -73,6 +66,10 @@ function ControladorCuadro(trabajadores){
       cuadro.asignarTrabajo.apply(this, trabajador)
     })
   }
+  this.actualizarCuadro = function(){
+    d3.select("#svg").remove()
+    this.pintarCuadro()
+   }
 }
 
 

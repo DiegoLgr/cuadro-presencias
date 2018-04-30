@@ -26,7 +26,6 @@ function CuadroPresencias (){
    let svgWidth = tableWidth + workerLabelsLength
       svgHeight = 0;
  let that = this
-
 //--------------------------------------------------
 function creaDatos(){
    datos = []
