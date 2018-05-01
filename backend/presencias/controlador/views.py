@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from .models import Dias
+from .serializers import DiasSerializer
 
-# Create your views here.
+
+class DiasViewSet(viewsets.ModelViewSet):
+    queryset = Dias.objects.all()
+    serializer_class = DiasSerializer
+
