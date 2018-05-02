@@ -78,13 +78,13 @@ function ControladorCuadro(trabajadores){
 
 let obras={}
 let puntoRoma = new Obra(509, "#6c8")
-obras["puntoRoma"]=puntoRoma
+obras["Punto Roma"]=puntoRoma
 let trabajadores = new Trabajadores()
 trabajadores.anadirTrabajador("Pepe")
 trabajadores.anadirTrabajador("Juan")
 trabajadores.anadirTrabajador("Sebastian")
 
-trabajadores.asignarTrabajo("Pepe", 1, 5, obras["puntoRoma"])
+trabajadores.asignarTrabajo("Pepe", 1, 5, obras["Punto Roma"])
 trabajadores.asignarTrabajo("Pepe", 5, 8, puntoRoma)
 trabajadores.asignarTrabajo("Juan", 3, 9, puntoRoma)
 trabajadores.asignarTrabajo("Juan", 8, 9, puntoRoma)
@@ -93,3 +93,23 @@ trabajadores.asignarTrabajo("Sebastian", 1, 8, puntoRoma)
 
 cuadro = new ControladorCuadro(trabajadores)
 cuadro.pintarCuadro()
+
+
+
+// AJAX
+var btn = document.getElementById('request')
+var request = new XMLHttpRequest()
+    request.onreadystatechange = function () {
+      if (request.readyState == 4)
+        if (request.status == 200){
+          var response = JSON.parse(request.response)
+          let dia = response[0]
+          trabajadores.asignarTrabajo(dia.trabajador, dia.dia, dia.horas, obras[dia.obra])
+          cuadro.actualizarCuadro()
+        }
+
+    }
+    btn.addEventListener('click', function(){
+      request.open('GET', 'http://localhost:8000/dias/', true)
+      request.send(null);
+    })
