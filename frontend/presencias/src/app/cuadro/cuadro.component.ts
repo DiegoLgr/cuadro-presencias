@@ -8,11 +8,13 @@ import { DiasService } from '../dias.service';
 })
 export class CuadroComponent implements OnInit {
 
-  prueba :number = 0;
   getDias(): void {
-    this.diasService.getDias().subscribe(numero => this.prueba = numero);
+    this.diasService.getDias()
+    .subscribe(data => console.log(data))
   }
-  constructor( private diasService : DiasService){ }
+  constructor(
+  private diasService: DiasService
+  ){}
   ngOnInit() {
     this.getDias();
   }
