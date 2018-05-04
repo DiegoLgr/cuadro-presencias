@@ -20,7 +20,10 @@ from rest_framework import routers
 from controlador import views
 
 router = routers.DefaultRouter()
+router.register(r'trabajadores', views.TrabajadoresViewSet)
+router.register(r'obras', views.ObrasViewSet)
 router.register(r'dias', views.DiasViewSet)
+router.register(r'datos-cuadro', views.DatosCuadroViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     path('admin/', admin.site.urls),

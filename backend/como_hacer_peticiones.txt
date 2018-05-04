@@ -1,0 +1,2 @@
+curl -d   '{"trabajador": 1, "obra": 503, "fecha": "2018-10-10", "horas":9}' -H "Content-Type: application/json" -X POST http://127.0.0.1:8000/dias/
+
