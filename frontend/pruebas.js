@@ -19,7 +19,8 @@ eliminarForm.addEventListener('submit', function(e){
   trabajadores.eliminarTrabajador(value)
   cuadro.actualizarCuadro()
 })
-
+// Esto manda la peticion para crear un dia.
+// (El trabajador esta puesto 1 a siempre, no depende del form.)
 const asignarForm = document.forms['asignar-trabajo']
 asignarForm.addEventListener('submit', function(e){
   e.preventDefault();
@@ -27,7 +28,7 @@ asignarForm.addEventListener('submit', function(e){
     .querySelector("#nombre")
     .value
 
-  const dias = asignarForm
+  const fecha = asignarForm
     .querySelector("#dia")
     .value
 
@@ -38,8 +39,27 @@ asignarForm.addEventListener('submit', function(e){
   const obra = asignarForm
     .querySelector("#obra")
     .value
-  obras
-  trabajadores.asignarTrabajo(
-    nombre, dias, horas, obras[obra])
-  cuadro.actualizarCuadro()
+
+    console.log("Obra=", obra)
+  body = {
+    "trabajador": 1,
+    "obra": obra,
+    "fecha":fecha,
+    "horas":horas
+  }
+  body = JSON.stringify(body)
+  console.log(body)
+
+  request.open('POST', 'http://localhost:8000/dias/', true)
+  request.setRequestHeader("Content-Type", "application/json")
+  request.send(body);
 })
+
+var request = new XMLHttpRequest()
+    request.onreadystatechange = function () {
+      if (request.readyState == 4)
+        if (request.status == 200){
+          var response = JSON.parse(request.response)
+          console.log(response)
+          }
+        }
