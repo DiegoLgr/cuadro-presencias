@@ -4,7 +4,7 @@
 // DATOS.
 function CuadroPresencias (){
   this.workers = []
-  let daysShown = 15;
+  let daysShown = 31;
   let daysList = [];
   for(i=1; i<=daysShown; i++)
     daysList.push(i);
