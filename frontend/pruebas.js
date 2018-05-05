@@ -19,9 +19,9 @@ eliminarForm.addEventListener('submit', function(e){
   trabajadores.eliminarTrabajador(value)
   cuadro.actualizarCuadro()
 })
+const asignarForm = document.forms['asignar-trabajo']
 // Esto manda la peticion para crear un dia.
 // (El trabajador esta puesto 1 a siempre, no depende del form.)
-const asignarForm = document.forms['asignar-trabajo']
 asignarForm.addEventListener('submit', function(e){
   e.preventDefault();
   const nombre = asignarForm
@@ -49,17 +49,9 @@ asignarForm.addEventListener('submit', function(e){
   }
   body = JSON.stringify(body)
   console.log(body)
-
+  console.log(request)
+// Esta cogiendo la request del otro main js.
   request.open('POST', 'http://localhost:8000/dias/', true)
   request.setRequestHeader("Content-Type", "application/json")
   request.send(body);
 })
-
-var request = new XMLHttpRequest()
-    request.onreadystatechange = function () {
-      if (request.readyState == 4)
-        if (request.status == 200){
-          var response = JSON.parse(request.response)
-          console.log(response)
-          }
-        }

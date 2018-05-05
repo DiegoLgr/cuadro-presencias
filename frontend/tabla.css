@@ -1,0 +1,26 @@
+body, html{
+  margin: 0;
+  padding: 0;
+  background: #fefefe;
+  font-family: 'Montserrat', sans-serif;
+}
+#mes{
+  text-align: center;
+}
+#tabla{
+  text-align: center;
+  border-spacing: 5px;
+}
+.nombre {
+  min-width: 6rem;
+  height: 3rem;
+}
+.dia{
+  font-size: 14px;
+  padding: 4px;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  background: #eee;
+  border-radius: 4px;
+}
