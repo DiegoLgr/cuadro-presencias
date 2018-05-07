@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2cb6d60-0282-403d-8b2a-5cd5dc0d4dc8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/pruebas.js" afterPath="$PROJECT_DIR$/../../frontend/pruebas.js" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/tabla-presencias.html" afterPath="$PROJECT_DIR$/../../frontend/tabla-presencias.html" />
-      <change beforePath="$PROJECT_DIR$/../../frontend/tabla-presencias.js" afterPath="$PROJECT_DIR$/../../frontend/tabla-presencias.js" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -65,7 +62,7 @@
       <file leaf-file-name="serializers.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controlador/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
+            <state relative-caret-position="533">
               <caret line="46" column="41" lean-forward="false" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
@@ -714,7 +711,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controlador/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
+        <state relative-caret-position="533">
           <caret line="46" column="41" lean-forward="false" selection-start-line="46" selection-start-column="41" selection-end-line="46" selection-end-column="41" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />

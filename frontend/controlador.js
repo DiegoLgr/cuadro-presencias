@@ -7,6 +7,7 @@ function Dia(fecha, horas, codigo, color){
 }
 
 function Trabajador(nombre){
+
   this.nombre = nombre
   let _nombre = nombre
   this.dias = [new Dia(0, 0, 0, "")]
@@ -36,9 +37,11 @@ function Trabajador(nombre){
       return lista
       }
   }
-
+// TRABAJADORES.
 function Trabajadores(){
+  let APIsrc = 'http://localhost:8000/datos-cuadro/'
   let trabajadores = {}
+  let that = this
   this.anadirTrabajador = function(nombre){
     if(!trabajadores.hasOwnProperty(nombre))
       trabajadores[nombre] = new Trabajador(nombre)
@@ -47,6 +50,7 @@ function Trabajadores(){
     delete trabajadores[nombre]
   }
   this.asignarTrabajo = function(nombre, fecha, horas, codigoObra, color){
+  // E.g.: trabajadores.asignarTrabajo("Pepe", "2018-05-01", 5, "#6c8", 509)
     let prueba = new Dia(fecha, horas, codigoObra, color)
     trabajadores[nombre].dias.push(prueba)
   }
@@ -66,44 +70,47 @@ function Trabajadores(){
    .map(function(nombre){
      trabajadores[nombre]
      .aLista()
-     .forEach((dia)=>resultado.push(dia))})
+     .forEach((dia)=>resultado.push(dia))
+   })
     return resultado
- }
+  }
+  this.cargarDatosDesdeAPI = function (){
+    let request = new XMLHttpRequest()
+    let resultado = new Promise((resolve, reject)=>{
+      request.onreadystatechange = function () {
+        if (request.readyState == 4)
+            if (request.status == 200){
+              let response = JSON.parse(request.response)
+              response.forEach((dia)=>{
+                if (!that.nombresTrabajadores().includes(dia.nombre))
+                  that.anadirTrabajador(dia.nombre)
+                  that.asignarTrabajo(
+                    dia.nombre, dia.fecha, dia.horas, dia.color, dia.codigo)
+            })
+            resolve()
+          }
+          else reject("Fallo")
+        }
+      })
+      request.open('GET', APIsrc, true)
+      request.send(null);
+      return resultado
+  }
 }
 
-function ControladorCuadro(trabajadores){
-  let cuadro = new Cuadro();
+function ControladorCuadro(){
+  let trabajadores = new Trabajadores
+  let cuadro = new Cuadro()
+  let that = this
   this.pintarCuadro = function(){
     cuadro.setTrabajadores(trabajadores.nombresTrabajadores())
     cuadro.setRangoDias()
     cuadro.construirCuadro()
     trabajadores.listarDias()
-      .forEach(function(trabajador){
-        console.log(trabajador)
-        cuadro.rellenarDia.apply(this, trabajador)
-      })
+      .forEach((dia)=>cuadro.rellenarDia.apply(this, dia))
+  }
+  this.CargarDatosYPintar = function(){
+    trabajadores.cargarDatosDesdeAPI()
+    .then(()=>that.pintarCuadro(), ()=>console.log("Ha habido un error con la peticion"))
   }
 }
-// AJAX
-// Creo que este es el ajax que pinta el cuadro en funcion de
-// los datos de la API
-// var btn = document.getElementById('request')
-// var request = new XMLHttpRequest()
-//     request.onreadystatechange = function () {
-//       if (request.readyState == 4)
-//         if (request.status == 200){
-//           var response = JSON.parse(request.response)
-//           // let dia = response[0]
-//           response.forEach(function(dia){
-//             numeroDia = dia.fecha.slice(8,10)
-//             if (numeroDia<10)numeroDia = numeroDia[1]
-//             trabajadores.asignarTrabajo(dia.nombre, numeroDia, dia.horas, dia.color, dia.codigo)
-//             cuadro.actualizarCuadro()
-//           })
-//         }
-//
-//     }
-//     btn.addEventListener('click', function(){
-//       request.open('GET', 'http://localhost:8000/datos-cuadro/', true)
-//       request.send(null);
-//     })
