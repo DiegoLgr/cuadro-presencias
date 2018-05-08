@@ -18,8 +18,35 @@
       let controlador = new ControladorCuadro()
       controlador.CargarDatosYPintar()
       botonAnadirTrabajador = document.getElementById('anadirTrabajador')
-      botonAnadirTrabajador.addEventListener('click', (e)=>controlador.addWorkerForm())
-
+      botonAnadirTrabajador.addEventListener('click', (e)=>controlador.mostrarFormAnadirTrabajadores())
     </script>
+  <button id="mostrar-trabajadores">Trabajadores</button>
+  <script type="text/javascript">
+  botonMostrarTrabajadores = document.getElementById('mostrar-trabajadores')
+  botonMostrarTrabajadores.addEventListener('click', (e)=>{
+    let lista = document.createElement('ul')
+    document.getElementsByTagName('body')[0].appendChild(lista)
+    let request = new XMLHttpRequest()
+    let resultado = new Promise((resolve,reject)=>{
+      request.onreadystatechange = function (){
+        if (request.readyState == 4)
+          if (request.status == 200){
+            let response = JSON.parse(request.response)
+            response.forEach((trabajador)=>{
+              let trab = document.createElement('li')
+              trab.innerHTML = trabajador.nombre
+              lista.appendChild(trab)
+            })
+            resolve()
+          }
+          else reject("No se han conseguido los trabajadores.")
+      }
+    })
+    request.open('GET', 'http://localhost:8000/trabajadores/',true)
+    request.send(null)
+    console.log(resultado)
+  })
+
+  </script>
   </body>
 </html>
