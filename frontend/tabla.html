@@ -13,8 +13,13 @@
   </head>
   <body>
     <table id="tabla"></table>
+    <button id="anadirTrabajador">Añadir Trabajador</button>
     <script type="text/javascript">
-      new ControladorCuadro().CargarDatosYPintar()
+      let controlador = new ControladorCuadro()
+      controlador.CargarDatosYPintar()
+      botonAnadirTrabajador = document.getElementById('anadirTrabajador')
+      botonAnadirTrabajador.addEventListener('click', (e)=>controlador.addWorkerForm())
+
     </script>
   </body>
 </html>

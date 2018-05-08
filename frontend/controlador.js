@@ -113,4 +113,46 @@ function ControladorCuadro(){
     trabajadores.cargarDatosDesdeAPI()
     .then(()=>that.pintarCuadro(), ()=>console.log("Ha habido un error con la peticion"))
   }
+
+  this.addWorkerForm = function(){
+      let trabajadorInput = document.createElement('input')
+      trabajadorInput.setAttribute('type', 'text')
+      trabajadorInput.setAttribute('name', 'nombre')
+      trabajadorInput.setAttribute('id', 'nombre')
+      let documentoInput = document.createElement('input')
+      documentoInput.setAttribute('type', 'text')
+      documentoInput.setAttribute('name', 'documento')
+      documentoInput.setAttribute('id', 'documento')
+      let fechaContratoInput = document.createElement('input')
+      fechaContratoInput.setAttribute('type', 'date')
+      fechaContratoInput.setAttribute('name', 'fecha-contrato')
+      fechaContratoInput.setAttribute('id', 'fecha')
+      let botonEnviar = document.createElement('input')
+      botonEnviar.setAttribute('type', 'submit')
+      botonEnviar.setAttribute('value', 'submit')
+      let anadirTrabajadorForm = document.createElement('form')
+      anadirTrabajadorForm.setAttribute('name', 'anadir-trabajador')
+      anadirTrabajadorForm.addEventListener('submit', (e)=>{
+        e.preventDefault()
+        const nombre = anadirTrabajadorForm.querySelector('#nombre').value
+        const documento = anadirTrabajadorForm.querySelector('#documento').value
+        const fecha = anadirTrabajadorForm.querySelector('#fecha').value
+        let datos = {
+          'nombre': nombre,
+          'documento_identificacion': documento,
+          'fecha_primer_contrato': fecha
+        }
+        datos = JSON.stringify(datos)
+        let request = new XMLHttpRequest()
+        request.open('POST','http://localhost:8000/trabajadores/', true)
+        request.setRequestHeader("Content-Type", 'application/json')
+        request.send(datos)
+      })
+      anadirTrabajadorForm.appendChild(trabajadorInput)
+      anadirTrabajadorForm.appendChild(documentoInput)
+      anadirTrabajadorForm.appendChild(fechaContratoInput)
+      anadirTrabajadorForm.appendChild(botonEnviar)
+      document.getElementsByTagName('body')[0]
+      .appendChild(anadirTrabajadorForm)
+    }
 }
