@@ -8,6 +8,7 @@ body, html{
   text-align: center;
 }
 #tabla{
+  margin: 3rem;
   text-align: center;
   border-spacing: 5px;
 }

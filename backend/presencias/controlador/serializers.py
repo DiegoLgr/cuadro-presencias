@@ -5,7 +5,7 @@ from .models import Trabajadores, Obras, Dias
 class TrabajadoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trabajadores
-        fields = ('nombre', 'documento_identificacion', 'fecha_primer_contrato')
+        fields = ('id', 'nombre', 'documento_identificacion', 'fecha_primer_contrato')
 
 
 class ObrasSerializer(serializers.ModelSerializer):
