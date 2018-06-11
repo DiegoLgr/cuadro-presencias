@@ -5,29 +5,26 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <!-- script de la aplicacion -->
+    <script src="constructions.js" charset="utf-8"></script>
+    <script src="constructions-view.js" charset="utf-8"></script>
     <script src="tabla.js" charset="utf-8"></script>
     <script src="controlador.js" charset="utf-8"></script>
     <!-- estilos de la aplicacion   -->
     <link rel="stylesheet" href="tabla.css">
+    <link rel="stylesheet" href="constructions.css">
     <title>Tabla</title>
   </head>
   <body>
     <!-- HTML -->
+    <div id="workers-list"><h3>Trabajadores</h3> </div>
+    <div id="constructions">
+      <h3>Obras</h3>
+      <ul id="constructions-list"></ul>
+    </div>
     <table id="tabla"></table>
     <button id="anadirTrabajador">Añadir Trabajador</button>
-    <button id="mostrar-trabajadores">Trabajadores</button>
+    <!-- <button id="mostrar-trabajadores">Trabajadores</button> -->
     <!--==================================================-->
-    <script type="text/javascript">
-      let controlador = new ControladorCuadro()
-      controlador.CargarDatosYPintar()
-      // Añadir trabajadores
-      let mostrandoFormAnadir = false
-      botonAnadirTrabajador = document.getElementById('anadirTrabajador')
-      botonAnadirTrabajador.addEventListener('click',
-        (e)=>mostrandoFormAnadir = controlador.mostrarFormAnadirTrabajadores(mostrandoFormAnadir))
-      let mostrandoTrabajadores = false
-      botonMostrarTrabajadores = document.getElementById('mostrar-trabajadores')
-      botonMostrarTrabajadores.addEventListener('click',(e)=>controlador.mostrarTrabajadores())
-    </script>
+    <script src="main.js" charset="utf-8"></script>
   </body>
 </html>

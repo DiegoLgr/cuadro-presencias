@@ -17,10 +17,10 @@ body, html{
   height: 3rem;
 }
 .dia{
-  font-size: 14px;
-  padding: 4px;
-  width: 3rem;
-  height: 3rem;
+  font-size: 13px;
+  padding: 3px;
+  width: 2.5rem;
+  height: 2.5rem;
   text-align: center;
   background: #eee;
   border-radius: 4px;

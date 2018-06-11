@@ -176,11 +176,11 @@ function ControladorCuadro(){
   }
   // Mostrar trabajadores.
   this.mostrarTrabajadores = function(){
-    if (!mostrandoTrabajadores){
+    // if (!mostrandoTrabajadores){
       // Creo el elemento lista.
       let lista = document.createElement('ul')
       lista.setAttribute('id', 'lista-trabajadores')
-      document.getElementsByTagName('body')[0]
+      document.getElementById("workers-list")
         .appendChild(lista)
       // Pido trabajadores.
       let request = new XMLHttpRequest()
@@ -188,11 +188,6 @@ function ControladorCuadro(){
         let response = JSON.parse(request.response)
         response.forEach((trabajador) => anadirLiTrabajador(trabajador, lista))
       })
-    }else{
-      let lista = document.getElementById('lista-trabajadores')
-      lista.parentNode.removeChild(lista)
-    }
-    mostrandoTrabajadores = !mostrandoTrabajadores
   }
   function pedirTrabajadores(request){
     return new Promise((resolve, reject)=>{
